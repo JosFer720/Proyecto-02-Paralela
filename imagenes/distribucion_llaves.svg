@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Distribución del espacio de llaves y rendimiento</title>
+  <desc id="desc">Partición contigua del espacio DES entre cuatro procesos, efecto de la posición de la llave y fórmulas de speedup y eficiencia.</desc>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker>
+    <filter id="s" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+    <style>.t{font-family:Arial,Helvetica,sans-serif;fill:#0f172a}.title{font-size:34px;font-weight:700}.sub{font-size:17px;fill:#475569}.h{font-size:20px;font-weight:700}.b{font-size:16px}.sm{font-size:14px;fill:#475569}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}.axis{stroke:#475569;stroke-width:2;fill:none;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1400" height="900" fill="#f8fafc"/>
+  <rect x="40" y="32" width="1320" height="830" rx="24" fill="#fff" stroke="#e2e8f0" filter="url(#s)"/>
+  <text class="t title" x="80" y="88">Distribución contigua del espacio de llaves</text>
+  <text class="t sub" x="80" y="120">Cada proceso recorre su intervalo en orden ascendente y todos se detienen al recibir la llave encontrada.</text>
+
+  <!-- number line -->
+  <text class="t h" x="80" y="180">Ejemplo con p = 4 procesos</text>
+  <g stroke="#fff" stroke-width="3">
+    <rect x="100" y="215" width="290" height="82" rx="13" fill="#2563eb"/><rect x="390" y="215" width="290" height="82" fill="#0ea5e9"/><rect x="680" y="215" width="290" height="82" fill="#10b981"/><rect x="970" y="215" width="290" height="82" rx="13" fill="#f59e0b"/>
+  </g>
+  <g font-family="Arial" fill="#fff" text-anchor="middle"><text font-size="21" font-weight="700" x="245" y="251">P₀</text><text font-size="14" x="245" y="277">[0, 2⁵⁶/4)</text><text font-size="21" font-weight="700" x="535" y="251">P₁</text><text font-size="14" x="535" y="277">[2⁵⁶/4, 2·2⁵⁶/4)</text><text font-size="21" font-weight="700" x="825" y="251">P₂</text><text font-size="14" x="825" y="277">[2·2⁵⁶/4, 3·2⁵⁶/4)</text><text font-size="21" font-weight="700" x="1115" y="251">P₃</text><text font-size="14" x="1115" y="277">[3·2⁵⁶/4, 2⁵⁶)</text></g>
+  <line x1="100" y1="320" x2="1260" y2="320" class="axis"/><text class="t sm" x="100" y="344">0</text><text class="t sm" x="1230" y="344">2⁵⁶ − 1</text><text class="t sm" x="640" y="344">índice creciente</text>
+  <path d="M770 204 l14 -22 14 22 z" fill="#dc2626"/><line x1="784" y1="182" x2="784" y2="150" stroke="#dc2626" stroke-width="2"/><text x="784" y="140" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700" fill="#dc2626">llave objetivo</text>
+
+  <!-- Position comparison -->
+  <rect class="card" x="80" y="390" width="790" height="390" rx="20"/>
+  <text class="t h" x="115" y="432">La posición cambia el tiempo aparente</text>
+  <text class="t sm" x="115" y="459">Con velocidad similar r por proceso, domina el desplazamiento dentro del intervalo asignado.</text>
+  <g>
+    <text class="t b" x="115" y="515">Llave A · inicio</text><rect x="285" y="489" width="515" height="32" rx="8" fill="#e2e8f0"/><rect x="285" y="489" width="70" height="32" rx="8" fill="#10b981"/><circle cx="355" cy="505" r="7" fill="#dc2626"/>
+    <text class="t b" x="115" y="588">Llave B · mitad</text><rect x="285" y="562" width="515" height="32" rx="8" fill="#e2e8f0"/><rect x="285" y="562" width="260" height="32" rx="8" fill="#0ea5e9"/><circle cx="545" cy="578" r="7" fill="#dc2626"/>
+    <text class="t b" x="115" y="661">Llave C · final</text><rect x="285" y="635" width="515" height="32" rx="8" fill="#e2e8f0"/><rect x="285" y="635" width="485" height="32" rx="8" fill="#f59e0b"/><circle cx="770" cy="651" r="7" fill="#dc2626"/>
+  </g>
+  <text class="t sm" x="285" y="704">menos intentos</text><text class="t sm" x="695" y="704">más intentos</text>
+  <path class="axis" d="M285 685 H800"/>
+  <rect x="115" y="728" width="720" height="30" rx="9" fill="#fef2f2" stroke="#fecaca"/><text class="t sm" x="475" y="748" text-anchor="middle">No es el valor binario por sí solo: importa su posición local y qué proceso la recibe.</text>
+
+  <!-- Formula and implications -->
+  <rect x="910" y="390" width="410" height="180" rx="20" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text class="t h" x="945" y="432">Métricas</text>
+  <text class="t" x="945" y="480" font-size="25" font-weight="700">Speedup: Sₚ = T₁ / Tₚ</text>
+  <text class="t" x="945" y="526" font-size="25" font-weight="700">Eficiencia: Eₚ = Sₚ / p</text>
+  <text class="t sm" x="945" y="551">T₁: tiempo con 1 proceso · Tₚ: tiempo con p</text>
+
+  <rect class="card" x="910" y="595" width="410" height="185" rx="20"/>
+  <text class="t h" x="945" y="637">Qué agrega tiempo</text>
+  <circle cx="950" cy="672" r="5" fill="#2563eb"/><text class="t b" x="968" y="678">Intentos previos dentro del intervalo</text>
+  <circle cx="950" cy="711" r="5" fill="#2563eb"/><text class="t b" x="968" y="717">Desbalance: unos procesos trabajan más</text>
+  <circle cx="950" cy="750" r="5" fill="#2563eb"/><text class="t b" x="968" y="756">Comunicación y aviso de terminación</text>
+  <text class="t sm" x="80" y="825">Comparación justa: repetir cada configuración, promediar y usar las mismas llaves para 1, 2, 4… procesos.</text>
+</svg>

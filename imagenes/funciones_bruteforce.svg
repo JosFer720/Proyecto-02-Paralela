@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="940" viewBox="0 0 1400 940" role="img" aria-labelledby="title desc">
+  <title id="title">Funciones principales de bruteforce</title>
+  <desc id="desc">Relación entre tryKey, memcpy, decrypt, strstr y encrypt en el programa de fuerza bruta.</desc>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker>
+    <marker id="arrB" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/></marker>
+    <filter id="s" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.09"/></filter>
+    <style>.t{font-family:Arial,Helvetica,sans-serif;fill:#0f172a}.title{font-size:34px;font-weight:700}.sub{font-size:17px;fill:#475569}.h{font-size:20px;font-weight:700}.b{font-size:16px}.sm{font-size:14px;fill:#475569}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}.blue{fill:#eff6ff;stroke:#3b82f6;stroke-width:2}.green{fill:#ecfdf5;stroke:#10b981;stroke-width:2}.amber{fill:#fffbeb;stroke:#f59e0b;stroke-width:2}.red{fill:#fef2f2;stroke:#ef4444;stroke-width:2}.flow{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#arr)}.flowB{stroke:#2563eb;stroke-width:3;fill:none;marker-end:url(#arrB)}</style>
+  </defs>
+  <rect width="1400" height="940" fill="#f8fafc"/>
+  <rect x="38" y="30" width="1324" height="870" rx="24" fill="#fff" stroke="#e2e8f0" filter="url(#s)"/>
+  <text class="t title" x="78" y="88">Cómo colaboran las funciones de bruteforce_.c</text>
+  <text class="t sub" x="78" y="119">Cada llave candidata se prueba sobre una copia; el cifrado original permanece intacto.</text>
+
+  <!-- main flow -->
+  <rect class="blue" x="75" y="170" width="180" height="76" rx="15"/><text class="t h" x="165" y="201" text-anchor="middle">Llave candidata</text><text class="t b" x="165" y="226" text-anchor="middle">key = i</text>
+  <path class="flowB" d="M255 208 H325"/>
+  <rect class="green" x="325" y="158" width="200" height="100" rx="16"/><text class="t h" x="425" y="194" text-anchor="middle">tryKey</text><text class="t b" x="425" y="220" text-anchor="middle">¿produce texto válido?</text><text class="t sm" x="425" y="242" text-anchor="middle">retorna 1 o 0</text>
+  <path class="flow" d="M525 208 H595"/>
+  <rect class="amber" x="595" y="170" width="180" height="76" rx="15"/><text class="t h" x="685" y="201" text-anchor="middle">memcpy</text><text class="t b" x="685" y="226" text-anchor="middle">ciph → temp</text>
+  <path class="flow" d="M775 208 H845"/>
+  <rect class="blue" x="845" y="170" width="180" height="76" rx="15"/><text class="t h" x="935" y="201" text-anchor="middle">decrypt</text><text class="t b" x="935" y="226" text-anchor="middle">temp in-place</text>
+  <path class="flow" d="M1025 208 H1095"/>
+  <rect class="green" x="1095" y="170" width="180" height="76" rx="15"/><text class="t h" x="1185" y="201" text-anchor="middle">strstr</text><text class="t b" x="1185" y="226" text-anchor="middle">buscar frase clave</text>
+  <path class="flow" d="M1185 246 V280"/><path d="M1185 280 l55 42 -55 42 -55-42 z" fill="#fff" stroke="#64748b" stroke-width="2"/><text class="t b" x="1185" y="318" text-anchor="middle">¿halló?</text><text class="t sm" x="1185" y="338" text-anchor="middle">!= NULL</text>
+  <path class="flow" d="M1240 322 H1305 V400 H1240"/><text class="t sm" x="1270" y="306">sí</text><rect class="green" x="1120" y="400" width="170" height="60" rx="14"/><text class="t h" x="1205" y="437" text-anchor="middle">Llave encontrada</text>
+  <path class="flow" d="M1130 322 H1060 V400 H1100"/><text class="t sm" x="1080" y="306">no</text><rect class="card" x="900" y="400" width="200" height="60" rx="14"/><text class="t h" x="1000" y="425" text-anchor="middle">Probar key + 1</text><text class="t sm" x="1000" y="446" text-anchor="middle">sin alterar ciph</text>
+
+  <!-- Detail cards -->
+  <rect class="card" x="75" y="515" width="390" height="310" rx="18"/>
+  <rect x="75" y="515" width="390" height="55" rx="18" fill="#2563eb"/><rect x="75" y="550" width="390" height="20" fill="#2563eb"/>
+  <text x="105" y="550" font-family="Arial" font-size="21" font-weight="700" fill="#fff">encrypt / decrypt</text>
+  <text class="t b" x="105" y="610">1. Expandir key a 8 bytes DES</text><text class="t sm" x="125" y="635">desplazar bits y reservar paridad</text>
+  <text class="t b" x="105" y="675">2. Ajustar paridad</text><text class="t sm" x="125" y="700">des_setparity(&amp;k)</text>
+  <text class="t b" x="105" y="740">3. Transformar el búfer</text><text class="t sm" x="125" y="765">ecb_crypt(..., DES_ENCRYPT / DES_DECRYPT)</text>
+  <rect class="red" x="100" y="786" width="340" height="24" rx="8"/><text class="t sm" x="270" y="803" text-anchor="middle">Base dada: procesa 16 bytes; decrypt ignora len</text>
+
+  <rect class="card" x="505" y="515" width="390" height="310" rx="18"/>
+  <rect x="505" y="515" width="390" height="55" rx="18" fill="#d97706"/><rect x="505" y="550" width="390" height="20" fill="#d97706"/>
+  <text x="535" y="550" font-family="Arial" font-size="21" font-weight="700" fill="#fff">memcpy(temp, ciph, len)</text>
+  <text class="t b" x="535" y="605">Copia exactamente len bytes</text>
+  <text class="t sm" x="535" y="628">No agrega el terminador '\0'; se escribe después.</text>
+  <text class="t sm" x="535" y="663">ciph</text><text class="t sm" x="535" y="735">temp</text>
+  <g fill="#eff6ff" stroke="#3b82f6"><rect x="590" y="642" width="45" height="38"/><rect x="635" y="642" width="45" height="38"/><rect x="680" y="642" width="45" height="38"/><rect x="725" y="642" width="45" height="38"/><rect x="770" y="642" width="45" height="38"/></g>
+  <g class="t sm" text-anchor="middle"><text x="612" y="666">0</text><text x="657" y="666">1</text><text x="702" y="666">…</text><text x="747" y="666">n−1</text><text x="792" y="666">—</text></g>
+  <path class="flow" d="M702 685 V708"/>
+  <g fill="#fffbeb" stroke="#f59e0b"><rect x="590" y="714" width="45" height="38"/><rect x="635" y="714" width="45" height="38"/><rect x="680" y="714" width="45" height="38"/><rect x="725" y="714" width="45" height="38"/><rect x="770" y="714" width="45" height="38"/></g>
+  <g class="t sm" text-anchor="middle"><text x="612" y="738">0</text><text x="657" y="738">1</text><text x="702" y="738">…</text><text x="747" y="738">n−1</text><text x="792" y="738">\0</text></g>
+  <text class="t sm" x="535" y="790">Razón: cada intento modifica temp, no cipher.</text>
+
+  <rect class="card" x="935" y="515" width="390" height="310" rx="18"/>
+  <rect x="935" y="515" width="390" height="55" rx="18" fill="#059669"/><rect x="935" y="550" width="390" height="20" fill="#059669"/>
+  <text x="965" y="550" font-family="Arial" font-size="21" font-weight="700" fill="#fff">strstr(temp, search)</text>
+  <text class="t b" x="965" y="605">Busca la primera coincidencia completa.</text>
+  <text class="t sm" x="965" y="637">Texto descifrado candidato</text>
+  <rect x="965" y="652" width="330" height="48" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t sm" x="980" y="681">… fue</text>
+  <rect x="1025" y="655" width="260" height="40" rx="7" fill="#d1fae5" stroke="#10b981"/>
+  <text x="1155" y="671" font-family="Arial" font-size="11" font-weight="700" fill="#065f46" text-anchor="middle">la memoria compartida</text>
+  <text x="1155" y="687" font-family="Arial" font-size="11" font-weight="700" fill="#065f46" text-anchor="middle">fortalece a la comunidad</text>
+  <text class="t sm" x="965" y="735">Coincide → puntero al inicio → true</text>
+  <text class="t sm" x="965" y="765">No coincide → NULL → false</text>
+  <text class="t sm" x="965" y="800">La frase conocida valida la llave candidata.</text>
+  <text class="t sm" x="75" y="866">Flujo de preparación: el programa copia el texto plano en cipher y llama encrypt(the_key, cipher) una sola vez; luego inicia la búsqueda distribuida.</text>
+</svg>

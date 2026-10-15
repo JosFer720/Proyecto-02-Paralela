@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Flujo del algoritmo DES</title>
+  <desc id="desc">Diagrama del cifrado DES con permutación inicial, dieciséis rondas Feistel, intercambio, permutación final y ruta inversa para descifrar.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/></marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#d97706"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+    <style>
+      .t{font-family:Arial,Helvetica,sans-serif;fill:#0f172a}.title{font-size:34px;font-weight:700}.sub{font-size:17px;fill:#475569}.label{font-size:18px;font-weight:700}.small{font-size:15px}.tiny{font-size:13px;fill:#475569}.box{fill:#fff;stroke:#94a3b8;stroke-width:2}.blue{fill:#eff6ff;stroke:#3b82f6;stroke-width:2}.amber{fill:#fffbeb;stroke:#f59e0b;stroke-width:2}.green{fill:#ecfdf5;stroke:#10b981;stroke-width:2}.line{stroke:#334155;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.keyline{stroke:#d97706;stroke-width:2.5;fill:none;marker-end:url(#arrowAmber)}
+    </style>
+  </defs>
+  <rect width="1400" height="900" fill="#f8fafc"/>
+  <rect x="42" y="35" width="1316" height="830" rx="24" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text class="t title" x="80" y="92">DES · recorrido de un bloque de 64 bits</text>
+  <text class="t sub" x="80" y="122">La misma red Feistel cifra y descifra; solo cambia el orden de las 16 subllaves.</text>
+
+  <!-- Camino principal -->
+  <rect class="blue" x="75" y="180" width="150" height="76" rx="16"/><text class="t label" x="150" y="211" text-anchor="middle">Texto plano</text><text class="t small" x="150" y="237" text-anchor="middle">64 bits</text>
+  <path class="line" d="M225 218 H278"/>
+  <rect class="box" x="280" y="180" width="150" height="76" rx="16"/><text class="t label" x="355" y="211" text-anchor="middle">IP</text><text class="t small" x="355" y="237" text-anchor="middle">permutación inicial</text>
+  <path class="line" d="M430 218 H483"/>
+  <rect class="box" x="485" y="180" width="150" height="76" rx="16"/><text class="t label" x="560" y="211" text-anchor="middle">Separar</text><text class="t small" x="560" y="237" text-anchor="middle">L₀ · R₀ (32 + 32)</text>
+  <path class="line" d="M635 218 H688"/>
+  <rect class="green" x="690" y="168" width="205" height="100" rx="16"/><text class="t label" x="792" y="202" text-anchor="middle">16 rondas Feistel</text><text class="t small" x="792" y="229" text-anchor="middle">i = 1 … 16</text><text class="t tiny" x="792" y="251" text-anchor="middle">una subllave Kᵢ por ronda</text>
+  <path class="line" d="M895 218 H948"/>
+  <rect class="box" x="950" y="180" width="130" height="76" rx="16"/><text class="t label" x="1015" y="211" text-anchor="middle">Swap</text><text class="t small" x="1015" y="237" text-anchor="middle">R₁₆ · L₁₆</text>
+  <path class="line" d="M1080 218 H1133"/>
+  <rect class="box" x="1135" y="180" width="120" height="76" rx="16"/><text class="t label" x="1195" y="211" text-anchor="middle">IP⁻¹</text><text class="t small" x="1195" y="237" text-anchor="middle">permutación final</text>
+  <path class="line" d="M1255 218 H1290"/>
+  <circle cx="1310" cy="218" r="20" fill="#2563eb"/><text x="1310" y="223" text-anchor="middle" font-family="Arial" font-weight="700" font-size="16" fill="#fff">C</text>
+
+  <!-- Detalle de ronda -->
+  <rect x="270" y="335" width="860" height="310" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text class="t label" x="310" y="378">Una ronda Feistel i</text>
+  <text class="t tiny" x="310" y="402">El bloque derecho alimenta F; XOR combina su salida con el bloque izquierdo.</text>
+  <rect class="blue" x="315" y="445" width="145" height="62" rx="13"/><text class="t label" x="387" y="482" text-anchor="middle">Lᵢ₋₁</text>
+  <rect class="blue" x="315" y="545" width="145" height="62" rx="13"/><text class="t label" x="387" y="582" text-anchor="middle">Rᵢ₋₁</text>
+  <path class="line" d="M460 576 H520 V476 H570"/>
+  <rect class="green" x="570" y="445" width="220" height="62" rx="13"/><text class="t label" x="680" y="471" text-anchor="middle">F(Rᵢ₋₁, Kᵢ)</text><text class="t tiny" x="680" y="493" text-anchor="middle">E → XOR Kᵢ → S-box → P</text>
+  <path class="keyline" d="M680 570 V510"/><rect class="amber" x="622" y="570" width="116" height="48" rx="12"/><text class="t label" x="680" y="601" text-anchor="middle">Kᵢ (48 bits)</text>
+  <path class="line" d="M460 476 H820"/>
+  <path class="line" d="M790 476 H820"/>
+  <circle cx="850" cy="476" r="26" fill="#fff" stroke="#334155" stroke-width="2"/><text class="t label" x="850" y="483" text-anchor="middle">⊕</text>
+  <path class="line" d="M876 476 H990"/>
+  <rect class="blue" x="990" y="445" width="100" height="62" rx="13"/><text class="t label" x="1040" y="482" text-anchor="middle">Rᵢ</text>
+  <path class="line" d="M460 576 H930 V576 H990"/>
+  <rect class="blue" x="990" y="545" width="100" height="62" rx="13"/><text class="t label" x="1040" y="582" text-anchor="middle">Lᵢ</text>
+  <text class="t small" x="825" y="528">Rᵢ = Lᵢ₋₁ ⊕ F(Rᵢ₋₁,Kᵢ)</text>
+  <text class="t small" x="765" y="602">Lᵢ = Rᵢ₋₁</text>
+
+  <!-- Rutas de claves -->
+  <rect class="amber" x="85" y="698" width="1230" height="116" rx="18"/>
+  <text class="t label" x="120" y="737">Orden de subllaves</text>
+  <path d="M335 730 H1050" stroke="#2563eb" stroke-width="3" fill="none" marker-end="url(#arrowBlue)"/>
+  <text class="t small" x="350" y="719">Cifrar:</text><text class="t small" x="430" y="719">K₁</text><text class="t small" x="685" y="719">…</text><text class="t small" x="1010" y="719">K₁₆</text>
+  <path d="M1050 782 H335" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrowAmber)"/>
+  <text class="t small" x="350" y="803">Descifrar:</text><text class="t small" x="455" y="772">K₁</text><text class="t small" x="685" y="772">…</text><text class="t small" x="990" y="772">K₁₆</text>
+  <text class="t tiny" x="1160" y="744" text-anchor="middle">Misma estructura</text><text class="t tiny" x="1160" y="766" text-anchor="middle">orden inverso</text>
+</svg>
